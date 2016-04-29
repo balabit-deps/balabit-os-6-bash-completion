@@ -1,0 +1,22 @@
+From: Thilo Six <T.Six@gmx.de>
+Subject: use explicit C locale for ifconfig
+Bug-Debian: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=704832
+Origin: upstream, http://anonscm.debian.org/gitweb/?p=bash-completion/bash-completion.git;a=commitdiff;h=a9db458
+Forwarded: not-needed
+
+---
+ bash_completion |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+--- bash-completion.orig/bash_completion
++++ bash-completion/bash_completion
+@@ -836,7 +836,8 @@ _mac_addresses()
+     # - ifconfig on Linux: HWaddr or ether
+     # - ifconfig on FreeBSD: ether
+     # - ip link: link/ether
+-    COMPREPLY+=( $( { ifconfig -a || ip link show; } 2>/dev/null | sed -ne \
++    COMPREPLY+=( $( \
++        { LC_ALL=C ifconfig -a || ip link show; } 2>/dev/null | sed -ne \
+         "s/.*[[:space:]]HWaddr[[:space:]]\{1,\}\($re\)[[:space:]].*/\1/p" -ne \
+         "s/.*[[:space:]]HWaddr[[:space:]]\{1,\}\($re\)[[:space:]]*$/\1/p" -ne \
+         "s|.*[[:space:]]\(link/\)\{0,1\}ether[[:space:]]\{1,\}\($re\)[[:space:]].*|\2|p" -ne \

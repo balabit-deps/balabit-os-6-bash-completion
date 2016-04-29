@@ -1,0 +1,33 @@
+From: Luca Capello <luca@pca.it>
+Subject: fix wrong completion for dpkg's -W option
+Origin: vendor, https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=697513
+Bug-Debian: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=697513
+Forwarded: no
+
+---
+ completions/dpkg |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+--- bash-completion.orig/completions/dpkg
++++ bash-completion/completions/dpkg
+@@ -52,9 +52,9 @@ _dpkg()
+     fi
+ 
+     case $prev in
+-        -c|-i|-A|-I|-f|-e|-x|-X|-W|--install|--unpack|--record-avail| \
++        -c|-i|-A|-I|-f|-e|-x|-X|--install|--unpack|--record-avail| \
+         --contents|--info|--fsys-tarfile|--field|--control|--extract| \
+-        --vextract|--show)
++        --vextract)
+             _filedir '?(u|d)deb'
+             return 0
+             ;;
+@@ -62,7 +62,7 @@ _dpkg()
+             _filedir -d
+             return 0
+             ;;
+-        -s|-p|-l|--status|--print-avail|--list)
++        -s|-p|-l|-W|--status|--print-avail|--list|--show)
+             COMPREPLY=( $( apt-cache pkgnames "$cur" 2>/dev/null ) )
+             return 0
+             ;;
